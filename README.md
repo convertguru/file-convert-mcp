@@ -1,7 +1,7 @@
 # File Convert MCP Server
 A Model Context Protocol (MCP) server for converting files between different formats
 
-File Convert is a Model Context Protocol (MCP) server that can convert a lot of different file formats (images/office documents/audio/video/text/data/...) intothe  most popular formats like PDF/JPG/MP4/HTML and others. It provides a set of tools to transform Office documents, images, audio and video files and more into easily readable formats like PDF/JPG/PNG/TXT.
+File Convert is a Model Context Protocol (MCP) server that can convert a lot of different file formats (images/office documents/audio/video/text/data/...) into the  most popular formats like PDF/JPG/MP4/HTML and others. It provides a set of tools to transform Office documents, images, audio and video files and more into easily readable formats like PDF/JPG/PNG/TXT.
 
 ## Features
 
