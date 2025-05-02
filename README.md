@@ -22,7 +22,7 @@ File Convert is a Model Context Protocol (MCP) server that can convert a lot of 
 
 To integrate this server with a desktop app, add the following to your app's server configuration. If needed - set the absolute path to uv/uvx or uv.exe/uvx.exe on Windows:
 
-```js
+```json
 {
   "mcpServers": {
     "file-convert": {
@@ -38,7 +38,7 @@ To integrate this server with a desktop app, add the following to your app's ser
 
 Or if you cloned the repo to the folder on your disk (edit paths to uv and cloned repo):
 
-```js
+```json
 {
   "mcpServers": {
     "file-convert": {
@@ -54,7 +54,7 @@ Or if you cloned the repo to the folder on your disk (edit paths to uv and clone
 
 Or using uvx from disk:
 
-```js
+```json
 {
   "mcpServers": {
     "file-convert": {
