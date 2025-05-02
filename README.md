@@ -25,7 +25,7 @@ To integrate this server with a desktop app, add the following to your app's ser
 ```js
 {
   "mcpServers": {
-    "file-convert-mcp": {
+    "file-convert": {
       "command": "uvx",
       "args": ["--from", "git+https://github.com/convertguru/file-convert-mcp.git", "file-convert-mcp"],
       "env": {
@@ -41,7 +41,7 @@ Or if you cloned the repo to the folder on your disk (edit paths to uv and clone
 ```js
 {
   "mcpServers": {
-    "file-convert-mcp": {
+    "file-convert": {
       "command": "/home/User/.local/bin/uv",
       "args": ["--directory", "/home/User/file-convert-mcp/src/file_convert_mcp", "run", "server.py"],
       "env": {
@@ -57,7 +57,7 @@ Or using uvx from disk:
 ```js
 {
   "mcpServers": {
-    "file-convert-mcp": {
+    "file-convert": {
       "command": "uvx",
       "args": ["--from", "/home/User/file-convert-mcp", "file-convert-mcp"],
       "env": {
