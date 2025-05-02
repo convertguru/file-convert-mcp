@@ -1,0 +1,19 @@
+[project]
+name = "file-convert-mcp"
+version = "0.1.0"
+license = { text = "MIT" }
+description = "MCP tool for file conversion and file format detection by Convert.Guru"
+authors = []
+requires-python = ">=3.12"
+dependencies = [
+    "fastmcp",
+    "aiohttp",
+    "python-magic",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+file-convert-mcp = "file_convert_mcp.server:mcp.run"
