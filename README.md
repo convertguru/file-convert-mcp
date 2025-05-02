@@ -26,7 +26,7 @@ To integrate this server with a desktop app, add the following to your app's ser
 {
   "mcpServers": {
     "file-convert-mcp": {
-      "command": "/home/User/.local/bin/uvx",
+      "command": "uvx",
       "args": ["--from", "git+https://github.com/convertguru/file-convert-mcp.git", "file-convert-mcp"],
       "env": {
         "CONVERT_GURU_API_KEY": "your_api_key_here"
@@ -36,7 +36,7 @@ To integrate this server with a desktop app, add the following to your app's ser
 }
 ```
 
-Or if you cloned the repo to the folder on your disk:
+Or if you cloned the repo to the folder on your disk (edit paths to uv and cloned repo):
 
 ```js
 {
