@@ -71,35 +71,36 @@ Or using uvx from disk:
 ## Development
 
 1. Clone this repository
-   ```
-   git clone https://github.com/convertguru/file-convert-mcp.git
-   ```
+```
+git clone https://github.com/convertguru/file-convert-mcp.git
+```
 
 2. Fetch and cache python dependencies (optional, uvx does it automagically)
-  ```
-  cd file-convert-mcp
-  uv sync
-  cd ..
-  ```
+```
+cd file-convert-mcp
+uv sync
+cd ..
+```
 
 3. Run MCP server locally
-   ```
-   uvx --from ./file-convert-mcp file-convert-mcp
+```
+uvx --from ./file-convert-mcp file-convert-mcp
 
-   ## OR
-   uv run file-convert-mcp/src/file_convert_mcp/server.py
+## OR
+uv run file-convert-mcp/src/file_convert_mcp/server.py
 
-   ## OR
-   uv --directory file-convert-mcp/src/file_convert_mcp run server.py
+## OR
+uv --directory file-convert-mcp/src/file_convert_mcp run server.py
 
-   ## OR
-   cd file-convert-mcp/src/file_convert_mcp
-   uv run server.py
+## OR
+cd file-convert-mcp/src/file_convert_mcp
+uv run server.py
 
-   ## OR via uvx from github
-   uvx --from git+https://github.com/convertguru/file-convert-mcp.git file-convert-mcp
+## OR via uvx from github
+uvx --from git+https://github.com/convertguru/file-convert-mcp.git file-convert-mcp
 
-   ```
+```
+
 4. Edit `src/file_convert_mcp/server.py` if needed
 
 
