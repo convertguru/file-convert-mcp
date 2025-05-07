@@ -113,8 +113,8 @@ uv --directory file-convert-mcp/src/file_convert_mcp run server.py
 cd file-convert-mcp/src/file_convert_mcp
 uv run server.py
 
-# OR using uvx directly from the GitHub repository with .env
-UV_ENV_FILE=.env uvx --from git+[https://github.com/convertguru/file-convert-mcp.git](https://github.com/convertguru/file-convert-mcp.git) file-convert-mcp
+# OR using uvx to fetch the core from the GitHub repository + local .env file
+UV_ENV_FILE=.env uvx --from git+https://github.com/convertguru/file-convert-mcp.git file-convert-mcp
 ```
 
 **5. Modify the server logic if needed:**
