@@ -72,6 +72,8 @@ To integrate this server with your desktop application, add the following config
 }
 ```
 
+Also, see this guide on how to [set up MCP tools in Claude Desktop](https://modelcontextprotocol.io/quickstart/user#for-claude-desktop-users).
+
 ## 🛠️ Development
 
 Get started with local development by following these steps:
