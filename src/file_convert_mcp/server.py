@@ -15,6 +15,8 @@ load_dotenv()
 mcp = FastMCP("file-convert-mcp")
 base_url = 'https://convert.guru'
 api_key = os.getenv("CONVERT_GURU_API_KEY")
+if api_key is None:
+    api_key = ''
 
 @mcp.tool()
 async def detect_file_type(file_path: str) -> Dict[str, Any]:
