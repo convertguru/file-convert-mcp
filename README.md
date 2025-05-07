@@ -120,8 +120,8 @@ UV_ENV_FILE=.env uvx --from git+https://github.com/convertguru/file-convert-mcp.
 **5. Modify the server logic if needed:**
 Edit the main server file located at `src/file_convert_mcp/server.py.`
 
-**6. Clearing the `uv` Cache (if needed)**
-If `uv` has cached an older version of the code in `~/.cache/uv`, you might need to clear the cache. Alternatively, use `uv` with the `-n` or `--no-cache` option to bypass the cache.
+**6. Clearing the `uv` Cache (if needed):**
+If `uv` has cached an older version of the code in `~/.cache/uv`, you might need to clear the cache. Alternatively, use `uv` with the `-n` or `--no-cache` option to bypass it.
 
 ## ⚙️ Available Tools
 
