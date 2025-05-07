@@ -5,10 +5,16 @@ import magic
 import json
 from typing import Dict, Any
 from fastmcp import FastMCP
+from dotenv import load_dotenv
 import aiohttp
 
+# Load environment variables
+load_dotenv()
+
+# Initialize FastMCP
 mcp = FastMCP("file-convert-mcp")
 base_url = 'https://convert.guru'
+api_key = os.getenv("CONVERT_GURU_API_KEY")
 
 @mcp.tool()
 async def detect_file_type(file_path: str) -> Dict[str, Any]:
@@ -36,7 +42,7 @@ async def detect_file_type(file_path: str) -> Dict[str, Any]:
         data = [file_extension,size_hex,mime_type,filename]
         separator = '\xFE'
         joined_data = separator.join(data)
-        headers = {'cache-control': 'no-cache'}
+        headers = {'cache-control': 'no-cache', 'api-key': api_key}
 
         data_array = bytearray()
         for char in joined_data:
@@ -85,7 +91,7 @@ async def convert_file(file_path: str, ext_out: str) -> Dict[str, Any]:
 
             data = aiohttp.FormData()
             data.add_field('file', chunk, filename=filename)
-            headers = {'cache-control': 'no-cache'}
+            headers = {'cache-control': 'no-cache', 'api-key': api_key}
 
             async with aiohttp.ClientSession() as session:
                 async with session.post(base_url + '/api/v1/upload', data=data, headers=headers) as response:

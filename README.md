@@ -17,6 +17,7 @@ File Convert is a Model Context Protocol (MCP) server that can convert a lot of 
 
 1. Python >= 3.12
 2. <a href="https://docs.astral.sh/uv/getting-started/installation/">Python uv tool</a> for resolving python dependencies and running MCP easily
+3. API KEY - <a href="https://convert.guru/contact">contact the Convert.Guru team</a> to get the development API key. As of May 2025, the MСP is in testing and no api key is required.
 
 ## Usage with Desktop App
 
@@ -82,9 +83,15 @@ uv sync
 cd ..
 ```
 
-3. Run MCP server locally
+3. Create `.env` file with the api key:
 ```
-uvx --from ./file-convert-mcp file-convert-mcp
+CONVERT_GURU_API_KEY=your_api_key_here
+```
+
+4. Run MCP server locally
+```
+cd file-convert-mcp
+UV_ENV_FILE=.env uvx --from ./file-convert-mcp file-convert-mcp
 
 ## OR
 uv run file-convert-mcp/src/file_convert_mcp/server.py
@@ -97,11 +104,11 @@ cd file-convert-mcp/src/file_convert_mcp
 uv run server.py
 
 ## OR via uvx from github
-uvx --from git+https://github.com/convertguru/file-convert-mcp.git file-convert-mcp
+UV_ENV_FILE=.env uvx --from git+https://github.com/convertguru/file-convert-mcp.git file-convert-mcp
 
 ```
 
-4. Edit `src/file_convert_mcp/server.py` if needed
+5. Edit `src/file_convert_mcp/server.py` if needed
 
 
 ## Available Tools

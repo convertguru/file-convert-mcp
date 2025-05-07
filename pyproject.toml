@@ -8,6 +8,7 @@ requires-python = ">=3.12"
 dependencies = [
     "fastmcp",
     "aiohttp",
+    "python-dotenv",
     "python-magic",
 ]
 
