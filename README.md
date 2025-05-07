@@ -1,4 +1,4 @@
-# File Convert MCP Server by Convert.Guru
+# File Convert MCP Server
 
 A Model Context Protocol (MCP) server for converting files between various formats.
 
