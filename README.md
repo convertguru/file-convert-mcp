@@ -135,3 +135,6 @@ The MCP server provides the following tools:
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for complete details.
+
+Visit us [https://convert.guru](https://convert.guru/)
+
