@@ -1,4 +1,5 @@
 # File Convert MCP Server
+[![smithery badge](https://smithery.ai/badge/@convertguru/file-convert-mcp)](https://smithery.ai/server/@convertguru/file-convert-mcp)
 
 A Model Context Protocol (MCP) server for converting files between various formats.
 
@@ -74,6 +75,14 @@ To integrate this server with your desktop application, add the following config
 
 Also, see this guide on how to [set up MCP tools in Claude Desktop](https://modelcontextprotocol.io/quickstart/user#for-claude-desktop-users).
 
+### Installing via Smithery
+
+To install file-convert-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@convertguru/file-convert-mcp):
+
+```bash
+npx -y @smithery/cli install @convertguru/file-convert-mcp --client claude
+```
+
 ## 🛠️ Development
 
 Get started with local development by following these steps:
@@ -134,7 +143,6 @@ The MCP server provides the following tools:
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for complete details.
-
 Visit us [https://convert.guru](https://convert.guru/)
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for complete details.
