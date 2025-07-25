@@ -109,6 +109,11 @@ async def convert_file(file_path: str, ext_out: str) -> Dict[str, Any]:
                                 # Explicitly parse using json.loads
                                 conv_json_result = json.loads(
                                     conv_response_text)
+                                
+                                ## check for error in conv_json_result
+                                if conv_json_result.get('error'):
+                                    conv_json_result['error'] = f"File conversion failed: {conv_json_result.get('error')}"
+                                    return conv_json_result
 
                                 file_info = conv_json_result.get('file')
                                 if file_info and 'ext_out' in file_info and 'urls' in file_info and file_info['urls']:
@@ -158,9 +163,22 @@ async def post_json(url: str, data: dict, headers):
         try:
             async with session.post(url, json=data, headers=cloned_headers) as response:
                 response_text = await response.text()
-                return response_text
+                status = response.status
+                err = {}
+
+                if status == 200 or status == 400:
+                    return response_text
+                elif status == 524:
+                    err = {"error": f"Error HTTP 524 - operation takes too long to complete, timeout occured."}
+                elif status == 500:
+                    err = {"error": f"Error HTTP 500 - operation takes too long to complete, internal server error."}
+                else:
+                    err = {"error": f"Error HTTP {status})."}
+                
+                return json.dumps(err)
         except aiohttp.ClientError as e:
-            return f"An error occurred during the request: {e}"
+            err = {"error": f"An error occurred during the request (exception): {e}"}
+            return json.dumps(err)
 
 async def download_file(session: aiohttp.ClientSession, url: str, save_path: str) -> Dict[str, Any]:
     """Downloads a file from a URL and saves it to the specified path."""
