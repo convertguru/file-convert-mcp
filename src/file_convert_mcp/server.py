@@ -7,6 +7,8 @@ from typing import Dict, Any
 from fastmcp import FastMCP
 from dotenv import load_dotenv
 import aiohttp
+from starlette.responses import JSONResponse
+import asyncio
 
 # Load environment variables
 load_dotenv()
@@ -17,6 +19,25 @@ base_url = 'https://convert.guru'
 api_key = os.getenv("CONVERT_GURU_API_KEY")
 if api_key is None:
     api_key = ''
+
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request):
+    return JSONResponse({"status": "healthy", "service": "mcp-server"})
+
+@mcp.custom_route("/tools", methods=["GET"])
+async def list_tools(request):
+    tools_info = []
+    for tool_name, tool_func in mcp.tools.items():
+        tools_info.append({
+            "name": tool_name,
+            "description": tool_func.__doc__ or "No description available",
+            "async": asyncio.iscoroutinefunction(tool_func)
+        })
+    
+    return JSONResponse({
+        "tools": tools_info,
+        "total_tools": len(tools_info)
+    })
 
 @mcp.tool()
 async def detect_file_type(file_path: str) -> Dict[str, Any]:
@@ -196,4 +217,14 @@ async def download_file(session: aiohttp.ClientSession, url: str, save_path: str
         return {"error": f"An error occurred during file download from {url}: {e}"}
 
 if __name__ == "__main__":
-    mcp.run()
+    transport = os.getenv("TRANSPORT", "").upper()
+    if transport == "HTTP":
+        port = os.getenv("PORT", "8000")
+        try:
+            port_int = int(port)
+            mcp.run(transport="http", host="0.0.0.0", port=port_int)
+        except ValueError:
+            print(f"Invalid PORT value: {port}. Using default stdio transport.")
+            mcp.run()
+    else:
+        mcp.run()

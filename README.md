@@ -73,6 +73,20 @@ To integrate this server with your desktop application, add the following config
 }
 ```
 
+### Environment Variables
+
+The MCP server supports the following environment variables:
+
+- **`CONVERT_GURU_API_KEY`**: Your Convert.Guru API key (optional for development)
+- **`TRANSPORT`**: Transport method for the MCP server
+  - `"stdio"` (default): Standard input/output transport
+  - `"http"`: HTTP transport (streamable) with REST API endpoints
+- **`PORT`**: Port number for HTTP transport (default: 8000, only used when `TRANSPORT=http`)
+
+When using HTTP transport, the server provides additional endpoints:
+- `GET /health` - Health check endpoint
+- `GET /tools` - List of available MCP tools
+
 Also, see this guide on how to [set up MCP tools in Claude Desktop](https://modelcontextprotocol.io/quickstart/user#for-claude-desktop-users).
 
 ### Installing via Smithery
@@ -126,12 +140,30 @@ uv run server.py
 
 # OR using uvx to fetch the core from the GitHub repository + local .env file
 UV_ENV_FILE=.env uvx --from git+https://github.com/convertguru/file-convert-mcp.git file-convert-mcp
+
+# OR run with HTTP transport on custom port
+TRANSPORT=http PORT=9000 uv run file-convert-mcp/src/file_convert_mcp/server.py
+
+# OR run with stdio transport (default)
+TRANSPORT=stdio uv run file-convert-mcp/src/file_convert_mcp/server.py
 ```
 
-**5. Modify the server logic if needed:**
+**5. Create .env file with your configuration (optional for now):**
+
+```bash
+# Basic configuration
+echo "CONVERT_GURU_API_KEY=your_api_key_here" > file-convert-mcp/.env
+
+# OR with transport configuration
+echo "CONVERT_GURU_API_KEY=your_api_key_here" > file-convert-mcp/.env
+echo "TRANSPORT=http" >> file-convert-mcp/.env
+echo "PORT=8000" >> file-convert-mcp/.env
+```
+
+**6. Modify the server logic if needed:**
 Edit the main server file located at `src/file_convert_mcp/server.py.`
 
-**6. Clearing the `uv` Cache (if needed):**
+**7. Clearing the `uv` Cache (if needed):**
 If `uv` has cached an older version of the code in `~/.cache/uv`, you might need to clear the cache. Alternatively, use `uv` with the `-n` or `--no-cache` option to bypass it.
 
 ## ⚙️ Available Tools

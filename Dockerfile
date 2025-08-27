@@ -14,5 +14,12 @@ COPY LICENSE README.md ./
 # Install package
 RUN pip install --no-cache-dir .
 
+# Expose port 8000 for HTTP transport
+EXPOSE 8000
+
+# Set default environment variables
+ENV TRANSPORT=http
+ENV PORT=8000
+
 # Set default command
 CMD ["file-convert-mcp"]

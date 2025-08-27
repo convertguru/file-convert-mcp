@@ -10,9 +10,27 @@ startCommand:
         type: string
         default: ""
         description: Convert.Guru API key (optional for development)
+      transport:
+        type: string
+        enum: ["stdio", "http"]
+        default: "http"
+        description: Transport method for the MCP server
+      port:
+        type: integer
+        default: 8000
+        description: Port number for HTTP transport (optional, only used when transport is http)
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
-    (config) => ({ command: 'file-convert-mcp', env: { CONVERT_GURU_API_KEY: config.apiKey } })
+    (config) => ({ 
+      command: 'file-convert-mcp', 
+      env: { 
+        CONVERT_GURU_API_KEY: config.apiKey,
+        TRANSPORT: (config.transport || "http").toUpperCase(),
+        PORT: config.transport === "http" ? (config.port?.toString() || "8000") : undefined
+      } 
+    })
   exampleConfig:
     apiKey: ""
+    transport: "http"
+    port: 8000
