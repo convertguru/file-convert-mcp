@@ -1,5 +1,5 @@
 import os
-import io
+import sys
 import re
 import magic
 import json
@@ -16,6 +16,7 @@ load_dotenv()
 # Initialize FastMCP
 mcp = FastMCP("file-convert-mcp")
 base_url = 'https://convert.guru'
+MAX_FILE_SIZE = 40 * 1024 * 1024
 api_key = os.getenv("CONVERT_GURU_API_KEY")
 if api_key is None:
     api_key = ''
@@ -27,11 +28,11 @@ async def health_check(request):
 @mcp.custom_route("/tools", methods=["GET"])
 async def list_tools(request):
     tools_info = []
-    for tool_name, tool_func in mcp.tools.items():
+    for tool_name, tool in (await mcp.get_tools()).items():
         tools_info.append({
             "name": tool_name,
-            "description": tool_func.__doc__ or "No description available",
-            "async": asyncio.iscoroutinefunction(tool_func)
+            "description": tool.description or "No description available",
+            "async": asyncio.iscoroutinefunction(tool.fn)
         })
     
     return JSONResponse({
@@ -108,7 +109,9 @@ async def convert_file(file_path: str, ext_out: str) -> Dict[str, Any]:
 
     try:
         with open(file_path, "rb") as f:
-            chunk = f.read(40*1024*1024)
+            chunk = f.read(MAX_FILE_SIZE + 1)
+            if len(chunk) > MAX_FILE_SIZE:
+                return {"error": "File exceeds the maximum upload size of 40 MiB."}
 
             filename = os.path.basename(file_path)
 
@@ -138,19 +141,22 @@ async def convert_file(file_path: str, ext_out: str) -> Dict[str, Any]:
 
                                 file_info = conv_json_result.get('file')
                                 if file_info and 'ext_out' in file_info and 'urls' in file_info and file_info['urls']:
-                                    file_url_path = file_info['urls'][0]
                                     file_extension = file_info.get('ext_out')
-
-                                    if file_url_path.startswith('/'):
-                                        full_file_url = base_url + file_url_path
-                                    else:
-                                        full_file_url = file_url_path
-
                                     save_path = file_path + '.converted' + \
                                         f".{file_extension}"
-
-                                    download_result = await download_file(session, full_file_url, save_path)
-                                    return download_result
+                                    saved_paths = []
+                                    for file_url_path in file_info['urls']:
+                                        full_file_url = (base_url + file_url_path
+                                                         if file_url_path.startswith('/') else file_url_path)
+                                        download_result = await download_file(session, full_file_url, save_path)
+                                        if 'error' in download_result:
+                                            download_result['result'] = {"converted_file_paths": saved_paths}
+                                            return download_result
+                                        saved_paths.append(download_result['result']['converted_file_path'])
+                                    return {"result": {
+                                        "converted_file_path": saved_paths[0],
+                                        "converted_file_paths": saved_paths,
+                                    }}
 
                                 else:
                                     return {"error": f"File URL information not found in the API response.: {conv_response_text}"}
@@ -206,9 +212,22 @@ async def download_file(session: aiohttp.ClientSession, url: str, save_path: str
     try:
         async with session.get(url) as response:
             if response.status == 200:
-                with open(save_path, 'wb') as f:
-                    async for chunk in response.content.iter_chunked(8192):
-                        f.write(chunk)
+                root, extension = os.path.splitext(save_path)
+                counter = 1
+                while True:
+                    try:
+                        f = open(save_path, 'xb')
+                        break
+                    except FileExistsError:
+                        counter += 1
+                        save_path = f"{root}_{counter}{extension}"
+                try:
+                    with f:
+                        async for chunk in response.content.iter_chunked(8192):
+                            f.write(chunk)
+                except BaseException:
+                    os.remove(save_path)
+                    raise
                 return {"result": {"converted_file_path": save_path}}
             else:
                 response_text = await response.text()
@@ -216,7 +235,8 @@ async def download_file(session: aiohttp.ClientSession, url: str, save_path: str
     except aiohttp.ClientError as e:
         return {"error": f"An error occurred during file download from {url}: {e}"}
 
-if __name__ == "__main__":
+def main():
+    """Start the installed command and direct script with the same settings."""
     transport = os.getenv("TRANSPORT", "").upper()
     if transport == "HTTP":
         port = os.getenv("PORT", "8000")
@@ -224,7 +244,11 @@ if __name__ == "__main__":
             port_int = int(port)
             mcp.run(transport="http", host="0.0.0.0", port=port_int)
         except ValueError:
-            print(f"Invalid PORT value: {port}. Using default stdio transport.")
+            print(f"Invalid PORT value: {port}. Using default stdio transport.", file=sys.stderr)
             mcp.run()
     else:
         mcp.run()
+
+
+if __name__ == "__main__":
+    main()

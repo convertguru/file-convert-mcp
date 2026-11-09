@@ -173,6 +173,32 @@ The MCP server provides the following tools:
 * `detect_file_type`: Analyzes the first 200 bytes of an uploaded file and uses the Convert.Guru API to determine its type.
 * `convert_file`: Converts a given file to a specified output format. The desired file extension should be passed as the `ext_out` parameter.
 
+Files larger than 40 MiB are rejected before upload. All result files are saved
+beside the input file. Existing files are preserved by adding numbered suffixes.
+The result contains `converted_file_paths` for all downloaded files and retains
+`converted_file_path` for the first file for compatibility. If a later download
+fails, the error response includes the paths already downloaded.
+
+### Local development and checks (shared user installation)
+
+```powershell
+python -m pip install --user pytest build hatchling editables
+python -m pip install --user --no-build-isolation -e .
+python -m pytest -q
+python -m build --no-isolation
+```
+
+These tests use a local API substitute and do not upload files to Convert.Guru.
+They cover the 40 MiB boundary, multiple results, existing files, partial failure,
+native file detection, and the installed STDIO/HTTP command. Large temporary test
+files are removed automatically. Building creates local artifacts in `dist/`;
+it does not publish them.
+
+On Windows, the package uses `python-magic-bin`, which bundles libmagic.
+FastMCP is constrained to the tested 2.x API. If the user Scripts directory is not
+on PATH, launch `file-convert-mcp.exe` using its full path, or run
+`python -m file_convert_mcp.server`.
+
 ## 📜 License
 
 Visit us [https://convert.guru](https://convert.guru/)
