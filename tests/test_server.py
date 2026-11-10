@@ -125,6 +125,8 @@ async def check_mcp(transport):
         # An actual tool call, deliberately rejected before any external API request.
         response = await client.call_tool('convert_file', {'file_path': '', 'ext_out': 'txt'})
         assert 'file_path parameter is required' in str(response)
+        response2 = await client.call_tool('detect_file_type', {'file_path': ''})
+        assert 'file_path parameter is required' in str(response2)
 
 
 @pytest.mark.parametrize('port', [None, 'invalid'])

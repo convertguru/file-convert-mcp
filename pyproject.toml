@@ -1,6 +1,6 @@
 [project]
 name = "file-convert-mcp"
-version = "0.1.2"
+version = "0.1.3"
 readme = "README.md"
 license = { text = "MIT" }
 description = "MCP tool for file conversion and file format detection by Convert.Guru"

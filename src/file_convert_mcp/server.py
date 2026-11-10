@@ -54,14 +54,15 @@ async def detect_file_type(file_path: str) -> Dict[str, Any]:
 
     try:
         with open(file_path, "rb") as f:
-            first_200_bytes = f.read(200)  # Read only the first 200 bytes
+            header_bytes = f.read(2048)
 
+        first_200_bytes = header_bytes[:200]  # Send only the first 200 bytes
         _, file_extension = os.path.splitext(file_path)
         file_extension = file_extension.lstrip('.') # Remove dot
         filename = os.path.basename(file_path)
         file_size_bytes = os.path.getsize(file_path)
         size_hex = hex(file_size_bytes)
-        mime_type = magic.Magic(mime=True).from_file(file_path)
+        mime_type = magic.from_buffer(header_bytes, mime=True)
 
         data = [file_extension,size_hex,mime_type,filename]
         separator = '\xFE'

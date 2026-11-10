@@ -1,9 +1,12 @@
 # File Convert MCP Server
+[![PyPI version](https://img.shields.io/pypi/v/file-convert-mcp.svg)](https://pypi.org/project/file-convert-mcp/)
 [![smithery badge](https://smithery.ai/badge/@convertguru/file-convert-mcp)](https://smithery.ai/server/@convertguru/file-convert-mcp)
 
 A Model Context Protocol (MCP) server for converting files between various formats.
 
 File Convert is an MCP server designed to handle the conversion of a wide array of file formats, including images, office documents, audio, video, text, and data files. It aims to provide seamless transformation into popular formats such as PDF, JPG, MP4, and HTML, among others. This server offers a set of powerful tools to convert diverse file types into easily accessible and widely compatible formats like PDF, JPG, PNG, TXT.
+
+> **Using an autonomous HTTP/x402/MPP agent instead of MCP?** Check out the pay-per-request [Convert.Guru x402 & MPP API](https://convert.guru/api/x402/v1/) (250+ formats, Base USDC / Tempo PATHUSD).
 
 ## ✨ Features
 
@@ -19,13 +22,26 @@ File Convert is an MCP server designed to handle the conversion of a wide array 
 
 1. **Python:** Version 3.12 or higher is required.
 2. **uv Tool:** Install the [Python uv tool](https://docs.astral.sh/uv/getting-started/installation/) for efficient dependency management and easy execution of the MCP server.
-3. **API Key (Development):** As of May 2025, the MCP is in its testing phase, and **no API key is currently required** for development. For future production use, please [contact the Convert.Guru team](https://convert.guru/contact) to obtain an API key.
+3. **API Key (Development):** The MCP is free to test during development, and **no API key is currently required**. For high-volume production use, please [contact the Convert.Guru team](https://convert.guru/contact) to obtain an API key.
 
-## 🚀 Usage with Desktop App
+## 🚀 Usage with Desktop App (Claude Desktop, Cursor, Windsurf)
 
 To integrate this server with your desktop application, add the following configuration to your app's server settings. If necessary, adjust the absolute path to the `uv`/`uvx` executables (or `uv.exe`/`uvx.exe` on Windows).
 
-**Using `uvx` (recommended):**
+**Using `uvx` from PyPI (recommended):**
+
+```json
+{
+  "mcpServers": {
+    "file-convert": {
+      "command": "uvx",
+      "args": ["file-convert-mcp"]
+    }
+  }
+}
+```
+
+**Or using `uvx` directly from GitHub:**
 
 ```json
 {
