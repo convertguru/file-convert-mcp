@@ -20,7 +20,7 @@ File Convert is an MCP server designed to handle the conversion of a wide array 
 
 ## 🛠️ Requirements
 
-1. **Python:** Version 3.12 or higher is required.
+1. **Python:** Version 3.10 or higher is required.
 2. **uv Tool:** Install the [Python uv tool](https://docs.astral.sh/uv/getting-started/installation/) for efficient dependency management and easy execution of the MCP server.
 3. **API Key (Development):** The MCP is free to test during development, and **no API key is currently required**. For high-volume production use, please [contact the Convert.Guru team](https://convert.guru/contact) to obtain an API key.
 

@@ -1,11 +1,45 @@
 [project]
 name = "file-convert-mcp"
-version = "0.1.3"
+version = "1.0.0"
 readme = "README.md"
 license = { text = "MIT" }
-description = "MCP tool for file conversion and file format detection by Convert.Guru"
-authors = []
-requires-python = ">=3.12"
+description = "MCP server for universal file conversion (PDF, DOCX, XLSX, HEIC, JPG, MP4, 250+ formats) and intelligent file format detection by Convert.Guru"
+authors = [
+    { name = "Convert.Guru" }
+]
+requires-python = ">=3.10"
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "file-converter",
+    "document-converter",
+    "image-converter",
+    "pdf",
+    "docx",
+    "xlsx",
+    "heic",
+    "mp4",
+    "trid",
+    "file-type-detection",
+    "convert-guru",
+    "ai-agents",
+    "claude-desktop"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+    "Topic :: Office/Business",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
 dependencies = [
     "fastmcp>=2.14.7,<3",
     "aiohttp",
@@ -17,7 +51,9 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://convert.guru"
+Documentation = "https://github.com/convertguru/file-convert-mcp#readme"
 Repository = "https://github.com/convertguru/file-convert-mcp"
+Issues = "https://github.com/convertguru/file-convert-mcp/issues"
 
 [build-system]
 requires = ["hatchling"]

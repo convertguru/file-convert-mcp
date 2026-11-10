@@ -1,3 +1,2 @@
-"""file-convert-mcp - MCP tool for file conversion and file format detection by Convert.Guru"""
-
-__version__ = "0.1.3"
+# Package initialization for file_convert_mcp
+__version__ = "1.0.0"
